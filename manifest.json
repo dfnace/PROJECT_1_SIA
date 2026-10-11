@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Quiz Proctor (Google Forms)",
+  "version": "1.0.0",
+  "description": "Transparent proctoring for Google Forms quizzes. Logs tab switching, new tabs, AI sites and local files, and reports them to the instructor.",
+  "minimum_chrome_version": "116",
+
+  "permissions": ["tabs", "storage", "alarms", "identity", "identity.email"],
+
+  "host_permissions": [
+    "https://script.google.com/*",
+    "https://script.googleusercontent.com/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://docs.google.com/forms/*",
+        "https://docs.google.com/u/*/forms/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+
+  "action": {
+    "default_title": "Quiz Proctor",
+    "default_popup": "popup.html"
+  },
+
+  "incognito": "spanning"
+}
